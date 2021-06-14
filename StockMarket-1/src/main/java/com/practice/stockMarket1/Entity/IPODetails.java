@@ -11,45 +11,35 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class IPODetails {
-	
+
 	@Id
 	@GeneratedValue
-	private int	id;
+	private int id;
 	
 	@Column(nullable = false)
-	private	float pricePerShare;
+    private float pricePerShare;
 	
 	@Column(nullable = false)
-	private	float totalShares;
+    private float totalShares;
 	
-	@Column(nullable = false)
-	private	String openDateTime;
+    @Column(nullable = false)
+    private String openDateTime;
 	
-	@Column(nullable = false)
-	private String remarks;
-	
-	@OneToOne(mappedBy="ipo", fetch=FetchType.LAZY)
-	private	Company company;
-	
-	@ManyToMany(mappedBy="ipo", fetch=FetchType.LAZY)
-	private List<StockExchange> stockExchanges = new ArrayList<>();
-
-	public IPODetails() {
-		super();
-	}
-
-	public IPODetails(float pricePerShare, float totalShares, String openDateTime, String remarks) {
-		super();
-		this.pricePerShare = pricePerShare;
-		this.totalShares = totalShares;
-		this.openDateTime = openDateTime;
-		this.remarks = remarks;
-	}
+    @Column(nullable = false)
+    private String remarks;
+    
+    @OneToOne(mappedBy="ipo", fetch=FetchType.LAZY)
+    private Company company;
+    
+    @JsonIgnore
+    @ManyToMany(mappedBy="ipo", fetch=FetchType.LAZY)
+    private List<StockExchange> stockExchanges = new ArrayList<>();
 
 	public float getPricePerShare() {
 		return pricePerShare;
@@ -63,7 +53,7 @@ public class IPODetails {
 		return totalShares;
 	}
 
-	public void setTotalShares(Long totalShares) {
+	public void setTotalShares(float totalShares) {
 		this.totalShares = totalShares;
 	}
 
@@ -87,7 +77,7 @@ public class IPODetails {
 		return id;
 	}
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "company-ipo")
 	public Company getCompany() {
 		return company;
 	}
@@ -96,7 +86,7 @@ public class IPODetails {
 		this.company = company;
 	}
 
-	@JsonManagedReference
+//	@JsonManagedReference(value = "stockExchange-ipo")
 	public List<StockExchange> getStockExchanges() {
 		return stockExchanges;
 	}
@@ -104,11 +94,33 @@ public class IPODetails {
 	public void addStockExchange(StockExchange stockExchange) {
 		stockExchanges.add(stockExchange);
 	}
-	
-	@Override
-	public String toString() {
-		return "IPODetails [id=" + id + ", pricePerShare=" + pricePerShare + ", totalShares=" + totalShares
-				+ ", openDateTime=" + openDateTime + ", remarks=" + remarks + "]";
+
+	public IPODetails(float pricePerShare, float totalShares, String openDateTime, String remarks, Company company) {
+		super();
+		this.pricePerShare = pricePerShare;
+		this.totalShares = totalShares;
+		this.openDateTime = openDateTime;
+		this.remarks = remarks;
+		this.company = company;
 	}
 
+	public IPODetails(float pricePerShare, float totalShares, String openDateTime, String remarks) {
+		super();
+		this.pricePerShare = pricePerShare;
+		this.totalShares = totalShares;
+		this.openDateTime = openDateTime;
+		this.remarks = remarks;
+	}
+
+	public IPODetails() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Ipo [id=" + id + ", pricePerShare=" + pricePerShare + ", totalShares=" + totalShares + ", openDateTime="
+				+ openDateTime + ", remarks=" + remarks + "]";
+	}
+    
 }

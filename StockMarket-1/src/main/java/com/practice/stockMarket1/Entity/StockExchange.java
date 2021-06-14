@@ -13,11 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class StockExchange {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
@@ -34,9 +35,11 @@ public class StockExchange {
     @Column()
     private String remarks;
     
+    @JsonIgnore
     @ManyToMany
     private List<IPODetails> ipo = new ArrayList<>();
     
+    @JsonIgnore
     @ManyToMany(mappedBy = "stockExchanges", fetch=FetchType.LAZY)
     private List<Company> companies = new ArrayList<>();
     
@@ -45,18 +48,6 @@ public class StockExchange {
     
     @OneToOne(mappedBy = "stockExchange")
     private CompanyCode companyCode;
-
-    public StockExchange() {
-		super();
-	}
-
-	public StockExchange(String stockExchangeName, String brief, String address, String remarks) {
-		super();
-		this.stockExchangeName = stockExchangeName;
-		this.brief = brief;
-		this.address = address;
-		this.remarks = remarks;
-	}
 
 	public String getStockExchangeName() {
 		return stockExchangeName;
@@ -94,7 +85,7 @@ public class StockExchange {
 		return id;
 	}
 
-	@JsonBackReference
+//	@JsonBackReference(value = "stockExchange-ipo")
 	public List<IPODetails> getIpo() {
 		return ipo;
 	}
@@ -103,7 +94,7 @@ public class StockExchange {
 		this.ipo.add(ipo);
 	}
 
-	@JsonManagedReference
+//	@JsonBackReference(value = "company-stockExchange")
 	public List<Company> getCompanies() {
 		return companies;
 	}
@@ -112,7 +103,7 @@ public class StockExchange {
 		this.companies.add(company);
 	}
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "stockPrice-stockExchange")
 	public List<StockPrice> getStockPrices() {
 		return stockPrices;
 	}
@@ -121,7 +112,7 @@ public class StockExchange {
 		this.stockPrices.add(stockPrice);
 	}
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "companyCode-stockExchange")
 	public CompanyCode getCompanyCode() {
 		return companyCode;
 	}
@@ -130,11 +121,24 @@ public class StockExchange {
 		this.companyCode = companyCode;
 	}
 
+	public StockExchange(String stockExchangeName, String brief, String address, String remarks) {
+		super();
+		this.stockExchangeName = stockExchangeName;
+		this.brief = brief;
+		this.address = address;
+		this.remarks = remarks;
+	}
+
+	public StockExchange() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String toString() {
-		return "StockExchange [id=" + id + ", stockExchangeName=" + stockExchangeName + ", brief=" + brief + ", address=" + address
-				+ ", remarks=" + remarks + "]";
+		return "StockExchange [id=" + id + ", stockExchangeName=" + stockExchangeName + ", brief=" + brief
+				+ ", address=" + address + ", remarks=" + remarks + "]";
 	}
+
 }
 

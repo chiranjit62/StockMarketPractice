@@ -2,9 +2,11 @@ package com.practice.stockMarket1.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -15,8 +17,14 @@ public class StockPrice {
 	@GeneratedValue
 	private int id;
 	
+//	@ManyToOne
+//	private Company company;
+	
+	@ManyToOne
+	private StockExchange stockExchange;
+	
 	@Column(nullable = false)
-	private float StockPrice;
+	private float stockPrice;
 	
 	@Column(nullable = false)
 	private String date;
@@ -24,18 +32,15 @@ public class StockPrice {
 	@Column(nullable = false)
 	private String time;
 	
-	@ManyToOne
-	private Company company;
-	
-	@ManyToOne
-	private StockExchange stockExchange;
-	
+	@OneToOne
+	private CompanyCode companyCode;
+
 	public float getStockPrice() {
-		return StockPrice;
+		return stockPrice;
 	}
 
 	public void setStockPrice(float stockPrice) {
-		this.StockPrice = stockPrice;
+		this.stockPrice = stockPrice;
 	}
 
 	public String getDate() {
@@ -58,22 +63,48 @@ public class StockPrice {
 		return id;
 	}
 
-	@JsonBackReference
-	public Company getCompany() {
-		return company;
-	}
+//	@JsonBackReference(value = "stockPrice-company")
+//	public Company getCompany() {
+//		return company;
+//	}
 
-	@JsonBackReference
+	@JsonBackReference(value = "stockPrice-stockExchange")
 	public StockExchange getStockExchange() {
 		return stockExchange;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
-	}
+//	public void setCompany(Company company) {
+//		this.company = company;
+//	}
 
 	public void setStockExchange(StockExchange stockExchange) {
 		this.stockExchange = stockExchange;
+	}
+
+	@JsonBackReference(value = "stockPrice-companyCode")
+	public CompanyCode getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(CompanyCode companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public StockPrice(float stockPrice, String date, String time) {
+		super();
+		this.stockPrice = stockPrice;
+		this.date = date;
+		this.time = time;
+	}
+
+	public StockPrice(Company company, StockExchange stockExchange, float stockPrice, String date, String time,
+			CompanyCode companyCode) {
+		super();
+		this.stockExchange = stockExchange;
+		this.stockPrice = stockPrice;
+		this.date = date;
+		this.time = time;
+		this.companyCode = companyCode;
 	}
 
 	public StockPrice() {
@@ -81,16 +112,10 @@ public class StockPrice {
 		// TODO Auto-generated constructor stub
 	}
 
-	public StockPrice( float stockPrice, String date, String time) {
-		super();
-		StockPrice = stockPrice;
-		this.date = date;
-		this.time = time;
-	}
-	
 	@Override
 	public String toString() {
-		return "StockPrice [id=" + id + ", stockPrice="
-				+ StockPrice + ", date=" + date + ", time=" + time + "]";
-	}	
+		return "StockPrice [id=" + id + ", stockExchange=" + stockExchange + ", stockPrice=" + stockPrice + ", date="
+				+ date + ", time=" + time + ", companyCode=" + companyCode + "]";
+	}
+
 }
