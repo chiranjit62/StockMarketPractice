@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.practice.stockMarket1.Entity.IPODetails;
 import com.practice.stockMarket1.repository.IpoRespository;
 
+
 @Service
 public class IPODetailsService {
-
 	@Autowired
 	IpoRespository repository;
 	
@@ -26,9 +26,12 @@ public class IPODetailsService {
 		existingIpo.setRemarks(ipo.getRemarks());
 		return repository.save(existingIpo);
 	}
+	public void deleteIPO(int id) {
+		repository.deleteById(id);
+	}
 	
 	public List<IPODetails> getIpos() {
 		return repository.findAll();
 	}
-	
+
 }

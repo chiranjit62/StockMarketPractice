@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 @Entity
 public class IPODetails {
-
 	@Id
 	@GeneratedValue
 	private int id;

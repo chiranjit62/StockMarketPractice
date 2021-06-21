@@ -8,11 +8,13 @@ import com.practice.stockMarket1.repository.UserRepository;
 
 @Service
 public class UserService {
-
+	
 	@Autowired
 	UserRepository repository;
 	
 	public Users saveUser(Users user) {
 		return repository.save(user);
 	}
+	
+
 }

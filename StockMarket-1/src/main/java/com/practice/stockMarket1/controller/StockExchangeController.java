@@ -36,4 +36,5 @@ public class StockExchangeController {
 		return _stockExchange.getCompanies();
 	}
 	
+
 }

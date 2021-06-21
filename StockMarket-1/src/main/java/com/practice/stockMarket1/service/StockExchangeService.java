@@ -11,7 +11,6 @@ import com.practice.stockMarket1.repository.StockExchangeRepository;
 
 @Service
 public class StockExchangeService {
-
 	@Autowired
 	StockExchangeRepository repository;
 	
@@ -30,5 +29,4 @@ public class StockExchangeService {
 	public StockExchange findById(int id) {
 		return repository.findById(id).orElse(null);
 	}
-	
 }

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Sectors {
-
 	@Id
 	@GeneratedValue
 	private int id;
@@ -81,4 +80,3 @@ public class Sectors {
 		return "Sector [id=" + id + ", sectorName=" + sectorName + ", brief=" + brief + "]";
 	}
 }
-

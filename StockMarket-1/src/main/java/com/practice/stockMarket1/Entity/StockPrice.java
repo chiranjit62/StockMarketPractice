@@ -10,15 +10,12 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
 @Entity
 public class StockPrice {
-
 	@Id
 	@GeneratedValue
 	private int id;
-	
-//	@ManyToOne
-//	private Company company;
 	
 	@ManyToOne
 	private StockExchange stockExchange;
@@ -32,7 +29,8 @@ public class StockPrice {
 	@Column(nullable = false)
 	private String time;
 	
-	@OneToOne
+
+	@ManyToOne
 	private CompanyCode companyCode;
 
 	public float getStockPrice() {
@@ -63,23 +61,16 @@ public class StockPrice {
 		return id;
 	}
 
-//	@JsonBackReference(value = "stockPrice-company")
-//	public Company getCompany() {
-//		return company;
-//	}
 
 	@JsonBackReference(value = "stockPrice-stockExchange")
 	public StockExchange getStockExchange() {
 		return stockExchange;
 	}
 
-//	public void setCompany(Company company) {
-//		this.company = company;
-//	}
-
 	public void setStockExchange(StockExchange stockExchange) {
 		this.stockExchange = stockExchange;
 	}
+
 
 	@JsonBackReference(value = "stockPrice-companyCode")
 	public CompanyCode getCompanyCode() {
@@ -118,4 +109,7 @@ public class StockPrice {
 				+ date + ", time=" + time + ", companyCode=" + companyCode + "]";
 	}
 
+	
+	
+	
 }

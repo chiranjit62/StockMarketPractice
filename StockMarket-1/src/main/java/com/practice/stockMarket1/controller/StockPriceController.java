@@ -21,7 +21,7 @@ import com.practice.stockMarket1.service.StockPriceService;
 public class StockPriceController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
 	@Autowired
 	StockPriceService stockPriceService;
 	

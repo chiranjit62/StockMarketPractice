@@ -16,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 @Entity
 public class StockExchange {
-
 	@Id
 	@GeneratedValue
 	private int id;
@@ -46,8 +46,8 @@ public class StockExchange {
     @OneToMany(mappedBy = "stockExchange", fetch=FetchType.LAZY)
     private List<StockPrice> stockPrices = new ArrayList<>();
     
-    @OneToOne(mappedBy = "stockExchange")
-    private CompanyCode companyCode;
+    @OneToMany(mappedBy = "stockExchange")
+    private List<CompanyCode> companyCode;
 
 	public String getStockExchangeName() {
 		return stockExchangeName;
@@ -113,12 +113,12 @@ public class StockExchange {
 	}
 
 	@JsonManagedReference(value = "companyCode-stockExchange")
-	public CompanyCode getCompanyCode() {
+	public List<CompanyCode> getCompanyCode() {
 		return companyCode;
 	}
 
-	public void setCompanyCode(CompanyCode companyCode) {
-		this.companyCode = companyCode;
+	public void addCompanyCode(CompanyCode companyCode) {
+		this.companyCode.add(companyCode);
 	}
 
 	public StockExchange(String stockExchangeName, String brief, String address, String remarks) {
@@ -141,4 +141,3 @@ public class StockExchange {
 	}
 
 }
-

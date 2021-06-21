@@ -1,16 +1,21 @@
 package com.practice.stockMarket1.Entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 
 @Entity
 public class CompanyCode {
@@ -25,11 +30,14 @@ public class CompanyCode {
 	@ManyToOne
 	private Company company;
 	
-	@OneToOne
+
+	@OneToMany(mappedBy = "companyCode", fetch=FetchType.LAZY)
+	private List<StockPrice> stockPrices;
+	
+	@ManyToOne
 	private StockExchange stockExchange;
 
-	@OneToOne(mappedBy = "companyCode", fetch=FetchType.LAZY)
-	private StockPrice stockPrice;
+	
 	
 	public int getCompanyCode() {
 		return companyCode;
@@ -48,6 +56,14 @@ public class CompanyCode {
 		this.company = company;
 	}
 
+	@JsonManagedReference(value = "stockPrice-companyCode")
+	public List<StockPrice> getStockPrice() {
+		return stockPrices;
+	}
+
+	public void addStockPrice(StockPrice stockPrice) {
+		this.stockPrices.add(stockPrice);
+	}
 	@JsonBackReference(value = "companyCode-stockExchange")
 	public StockExchange getStockExchange() {
 		return stockExchange;
@@ -57,14 +73,8 @@ public class CompanyCode {
 		this.stockExchange = stockExchange;
 	}
 
-	@JsonManagedReference(value = "stockPrice-companyCode")
-	public StockPrice getStockPrice() {
-		return stockPrice;
-	}
 
-	public void setStockPrice(StockPrice stockPrice) {
-		this.stockPrice = stockPrice;
-	}
+	
 
 	public CompanyCode() {
 		super();
@@ -79,7 +89,10 @@ public class CompanyCode {
 	@Override
 	public String toString() {
 		return "CompanyCode [id=" + id + ", companyCode=" + companyCode + ", company=" + company + ", stockExchange="
-				+ stockExchange + ", stockPrice=" + stockPrice + "]";
+				+ stockExchange + "]";
 	}
+
 	
+	
+
 }

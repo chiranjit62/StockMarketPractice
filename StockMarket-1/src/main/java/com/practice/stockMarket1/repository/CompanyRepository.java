@@ -10,5 +10,6 @@ import com.practice.stockMarket1.Entity.Company;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	@Query("SELECT c FROM COMPANY c WHERE c.companyName LIKE %?1%")
 	public List<Company> getCompanyBySearch(String searchString);
+	Company findByCompanyName(String companyName);
 
 }

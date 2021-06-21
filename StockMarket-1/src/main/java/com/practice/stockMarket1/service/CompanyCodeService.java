@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import com.practice.stockMarket1.Entity.CompanyCode;
 import com.practice.stockMarket1.repository.CompanyCodeRepository;
 
+
+
 @Service
 public class CompanyCodeService {
-
 	@Autowired
 	CompanyCodeRepository repository;
 	
@@ -19,5 +20,6 @@ public class CompanyCodeService {
 	public CompanyCode findByCompanyCode(int companyCode) {
 		return repository.findByCompanyCode(companyCode);
 	}
+
 }
 	

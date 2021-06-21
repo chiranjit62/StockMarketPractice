@@ -28,33 +28,14 @@ public class Users {
 	
 	@Column(nullable = false)
     private boolean isAdmin;
-    
-    public boolean isAdmin() {
-		return isAdmin;
-	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-    
-    public Users() {
+	public Users() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Users(String email, String username, String password, Long mobileNumber, boolean confirmed) {
-		super();
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.mobileNumber = mobileNumber;
-		this.confirmed = confirmed;
-	}
-
-	public Users(int id, String email, String username, String password, Long mobileNumber, boolean confirmed,
+	public Users(String email, String username, String password, Long mobileNumber, boolean confirmed,
 			boolean isAdmin) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -62,14 +43,12 @@ public class Users {
 		this.confirmed = confirmed;
 		this.isAdmin = isAdmin;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
-				+ ", mobileNumber=" + mobileNumber + ", confirmed=" + confirmed + ", isAdmin=" + isAdmin + "]";
+	
+	public int getId() {
+		return id;
 	}
-    
-    public String getEmail() {
+
+	public String getEmail() {
 		return email;
 	}
 
@@ -109,7 +88,19 @@ public class Users {
 		this.confirmed = confirmed;
 	}
 
-	public int getId() {
-		return id;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
+	@Override
+	public String toString() {
+		return "Users [email=" + email + ", username=" + username + ", password=" + password + ", mobileNumber="
+				+ mobileNumber + ", confirmed=" + confirmed + ", isAdmin=" + isAdmin + "]";
+	}
+
+
 }

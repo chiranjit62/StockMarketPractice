@@ -10,7 +10,6 @@ import com.practice.stockMarket1.repository.SectorRepository;
 
 @Service
 public class SectorService {
-
 	@Autowired
 	SectorRepository repository;
 	
@@ -24,5 +23,6 @@ public class SectorService {
 	
 	public Sectors findById(int id) {
 		return repository.findById(id).orElse(null);
-	}	
+	}
+
 }

@@ -1,5 +1,4 @@
 package com.practice.stockMarket1.Entity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 @Entity(name = "COMPANY")
 public class Company {
-
 	@Id
 	@GeneratedValue
 	private int id;
@@ -46,8 +45,6 @@ public class Company {
     @ManyToMany
     private List<StockExchange> stockExchanges = new ArrayList<>();
     
-//    @OneToMany(mappedBy = "company", fetch=FetchType.LAZY)
-//    private List<StockPrice> stockPrices = new ArrayList<>();
   
     @ManyToOne
     private Sectors sector;
@@ -179,5 +176,6 @@ public class Company {
 				+ sector + ", companyCodes=" + companyCodes + "]";
 	}
 	
-}
 
+	
+}
