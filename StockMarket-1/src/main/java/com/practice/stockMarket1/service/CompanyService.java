@@ -3,6 +3,7 @@ package com.practice.stockMarket1.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.practice.stockMarket1.Entity.Company;
@@ -29,8 +30,17 @@ public class CompanyService {
 		return repository.findByCompanyName(companyName);
 	}
 
-	public Company updateCompany(Company company) {
-		Company existingCompany = repository.findById(company.getId()).orElse(null);
+//	public Company updateCompany(Company company) {
+//		Company existingCompany = repository.findById(company.getId()).orElse(null);
+//		existingCompany.setTurnOver(company.getTurnOver());
+//		existingCompany.setCeo(company.getCeo());
+//		existingCompany.setBoardDirectors(company.getBoardDirectors());
+//		existingCompany.setBriefWriteup(company.getBriefWriteup());
+//		return repository.save(existingCompany);
+//	}
+	
+	public Company updateCompany(Company company, int id) {				
+		Company existingCompany = repository.findById(id).orElse(null);
 		existingCompany.setTurnOver(company.getTurnOver());
 		existingCompany.setCeo(company.getCeo());
 		existingCompany.setBoardDirectors(company.getBoardDirectors());
@@ -38,9 +48,9 @@ public class CompanyService {
 		return repository.save(existingCompany);
 	}
 	
-	public void deleteCompany(int id) {
-		repository.deleteById(id);
-	}
+//	public void deleteCompany(int id) {
+//		repository.deleteById(id);
+//	}
 	
 	public List<Company> searchCompany(String searchString){
 		return repository.getCompanyBySearch(searchString);
@@ -52,5 +62,11 @@ public class CompanyService {
 		} else {
 			return true;
 		}
+	}
+	
+	public void deleteCompany(int id) {
+		Company company = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Company not exist with id :" + id));
+		repository.delete(company);
 	}
 }
