@@ -1,15 +1,15 @@
 package com.practice.stockMarket1.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,54 +24,71 @@ import com.practice.stockMarket1.Entity.Company;
 import com.practice.stockMarket1.Entity.IPODetails;
 import com.practice.stockMarket1.service.CompanyService;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/stockCompany/")
+@RequestMapping("/stockcompany")
 public class CompanyController {
-	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	CompanyService service;
 	
 	@PostMapping("/addCompany")
-	public ResponseEntity <Company> addCompany(@RequestBody Company company) {
+	public ResponseEntity <Company>addCompany(@RequestBody Company company) {
 		boolean uniqueCompanyName = service.CompanyNameUniq(company.getCompanyName());
 		if(!uniqueCompanyName) {
 			return new  ResponseEntity<Company>(company,HttpStatus.BAD_REQUEST);
 		} 
 		else {
-//			service.saveCompany(company);
+			service.saveCompany(company);
 			return new  ResponseEntity<Company>(service.saveCompany(company),HttpStatus.OK);
-			
 		}
 	}
 	
-//	@PutMapping("/updateCompany")
-//	public Company updateCompany(@RequestBody Company company) {
-//		return service.updateCompany(company);
-//	}
 	
-	@PutMapping("/updateCompany/{id}")
-	public ResponseEntity<Company> updateCompany(@RequestBody Company company,@PathVariable int id) {
-		return new  ResponseEntity<Company>(service.updateCompany(company,id),HttpStatus.OK);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity <Company>DeleteCompany(@PathVariable int id) 
+	{
+		Company co1=service.findById(id);
+		if(co1!=null)
+		{
+		service.deleteCompany(id);
+      return new  ResponseEntity<Company>(HttpStatus.OK);
+		}
+		else
+		{
+			 return new  ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
-//	@GetMapping("/getCompany/{id}")
-//	public ResponseEntity<Company> getCompany(@PathVariable int id) {
-////		return service.findById(id);
-//		return new ResponseEntity<Company>(service.findById(id),HttpStatus.OK);
-//	}
+	@PutMapping("/updateCompany/{id}")
+	public  ResponseEntity <Company>addCompany(@RequestBody Company company,@PathVariable int id) {
+		Company co1=service.findById(id);
+		if(co1!=null) {
+		return new  ResponseEntity<Company>(service.updateCompany(company, id),HttpStatus.OK);
+		}
+		else
+		{
+			return new  ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 	
-	
-//	@GetMapping("/getCompany/{id}")
-//	public ResponseEntity<Company> getCompany(@PathVariable int id,BindingResult result) {
-////		return service.findById(id);
-//		if(result.hasErrors())
-//			return new ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
-//		else
-//			return new ResponseEntity<Company>(service.findById(id),HttpStatus.OK);
-//	}
+	//@GetMapping("/getCompany/{id}")
+	//public Company getCompany(@PathVariable int id) {
+		//return service.findById(id);
+	//}
+	@GetMapping("/getCompany/{id}")
+	public  ResponseEntity <Company>getCompanybyid(@PathVariable int id)
+	{
+		Company co=service.findById(id);
+		if(co!=null)
+		return new  ResponseEntity<Company>(service.findById(id),HttpStatus.OK);
+		else
+			return new  ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+			
+	}
 	
 	
 	@GetMapping("/getCompanybyname/{companyName}")
@@ -90,21 +107,8 @@ public class CompanyController {
 	public List<Company> searchCompany(@PathVariable String searchString) {
 		return service.searchCompany(searchString);
 	}
-	
 	@GetMapping("/companies")
 	public List<Company> getCompanies(){
 		return service.getCompanies();
-	}
-	
-//	@DeleteMapping("/delete/{id}")
-//	public String deleteCompanies(@PathVariable int id){
-//		 service.deleteCompany(id);
-//		return "Ok";
-//	}
-	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Company> deleteCompanies(@PathVariable int id){
-		service.deleteCompany(id);
-		return new  ResponseEntity<Company> (HttpStatus.OK);
 	}
 }
