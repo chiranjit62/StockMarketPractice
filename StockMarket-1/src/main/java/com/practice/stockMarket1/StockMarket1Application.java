@@ -57,10 +57,10 @@ public class StockMarket1Application implements CommandLineRunner {
 		Sectors sector = new Sectors("Heath Sector", "It takes care of the problems");
 		sectorRespository.save(sector);
 		
-		StockExchange stockExchange = new StockExchange("BSE", "Primary", "7th Street, near New Mall, Bombay", "Very Important");
+		StockExchange stockExchange = new StockExchange("BSE", "StockEx-1", "Bangalore", "Good!");
 		stockExchangeRepository.save(stockExchange);
 		
-		StockExchange stockExchange1 = new StockExchange("NSE", "Primary", "8th Street, near New Mall, Bombay", "Very Critical");
+		StockExchange stockExchange1 = new StockExchange("NSE", "StockEx-2", "Chennai", "Good!");
 		stockExchangeRepository.save(stockExchange1);
 		
 		StockPrice stockPrice = new StockPrice((float)20.12, "20-2-12", "8:13 AM");
@@ -72,21 +72,16 @@ public class StockMarket1Application implements CommandLineRunner {
 		ipoRepository.save(ipo);
 		ipoRepository.save(ipo1);
 		
-		Company company = new Company("company1", (float)200000000, "Mahesh Singh", "Rahul Bisnoy, Ashu Bisig, Mahesh Singh", "It is working pretty well.", ipo, Arrays.asList(stockExchange), Arrays.asList(stockPrice), sector);
+		Company company = new Company("company1", (float)20000, "CEO 1", "A, B, CEO1", "It is working!", ipo, Arrays.asList(stockExchange), Arrays.asList(stockPrice), sector);
 		companyRepository.save(company);
 		
-		Company company1 = new Company("company2", (float)200000000, "Mahesh Singh1", "Rahul Bisnoy1, Ashu Bisig1, Mahesh Singh1", "It is working pretty well.1");
+		Company company1 = new Company("company2", (float)20000, "CEO 2", "C D, E, CEO 2", "Congo!");
 		company1.addStockExchange(stockExchange1);
 		company1.addStockExchange(stockExchange);
 		company1.setSector(sector);
 		company1.setIpo(ipo1);
 		companyRepository.save(company1);
 		
-//		stockPrice.setCompany(company);
-		
-//		ipo.addStockExchange(stockExchange);
-//		ipoRepository.save(ipo);
-//		the above didn't work
 		
 		stockExchange.addIpo(ipo);
 		stockExchangeRepository.save(stockExchange);

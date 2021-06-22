@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,10 +57,23 @@ public class CompanyController {
 		return new  ResponseEntity<Company>(service.updateCompany(company,id),HttpStatus.OK);
 	}
 	
-	@GetMapping("/getCompany/{id}")
-	public Company getCompany(@PathVariable int id) {
-		return service.findById(id);
-	}
+//	@GetMapping("/getCompany/{id}")
+//	public ResponseEntity<Company> getCompany(@PathVariable int id) {
+////		return service.findById(id);
+//		return new ResponseEntity<Company>(service.findById(id),HttpStatus.OK);
+//	}
+	
+	
+//	@GetMapping("/getCompany/{id}")
+//	public ResponseEntity<Company> getCompany(@PathVariable int id,BindingResult result) {
+////		return service.findById(id);
+//		if(result.hasErrors())
+//			return new ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+//		else
+//			return new ResponseEntity<Company>(service.findById(id),HttpStatus.OK);
+//	}
+	
+	
 	@GetMapping("/getCompanybyname/{companyName}")
 	public Company getCompanybyname(@PathVariable String companyName)
 	{
